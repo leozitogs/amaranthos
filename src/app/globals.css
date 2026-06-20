@@ -1,0 +1,55 @@
+@import 'tailwindcss';
+
+@font-face {
+  font-family: 'Mainstay';
+  src:
+    url('/fonts/Mainstay.otf') format('opentype'),
+    url('/fonts/Mainstay.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Moontime';
+  src: url('/fonts/moontime-regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-vinho: #874b69;
+  --color-rosa: #f0d2d2;
+  --color-menta: #b4d2c3;
+
+  --color-creme: #fdf7f1;
+  --color-grafite: #2a1f24;
+  --color-vinho-escuro: #6b3a52;
+  --color-menta-escuro: #8ab5a3;
+
+  --color-background: var(--color-creme);
+  --color-foreground: var(--color-grafite);
+  --color-primary: var(--color-vinho);
+  --color-primary-foreground: var(--color-creme);
+  --color-secondary: var(--color-menta);
+  --color-secondary-foreground: var(--color-vinho);
+  --color-accent: var(--color-rosa);
+  --color-accent-foreground: var(--color-vinho);
+  --color-muted: #f5ede5;
+  --color-muted-foreground: #6b5d54;
+  --color-border: #e8ddd2;
+  --color-ring: var(--color-vinho);
+
+  --font-mainstay: 'Mainstay', sans-serif;
+  --font-moontime: 'Moontime', cursive;
+  --font-dm-sans: var(--font-dm-sans);
+  --font-inter: var(--font-inter);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-creme);
+    color: var(--color-grafite);
+  }
+}
