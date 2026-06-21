@@ -3,13 +3,13 @@ import { cn } from '@/lib/utils';
 
 const logoAssets = {
   full: {
-    src: '/assets/brand/logotipo_completo.svg',
+    src: '/assets/brand/logo/amaranthos-logo.svg',
     width: 1440,
     height: 810,
     alt: 'Logotipo da Amaranthos Atelie',
   },
   wordmark: {
-    src: '/assets/brand/tipografia_amaranthos.svg',
+    src: '/assets/brand/tipografia/amaranthos-tipografia.svg',
     width: 388,
     height: 139,
     alt: 'Tipografia da Amaranthos Atelie',

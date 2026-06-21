@@ -13,7 +13,7 @@ export default function Contato() {
         <div className="mx-auto flex max-w-2xl flex-col items-center space-y-6 text-center">
           <div className="mb-2">
             <Image
-              src="/assets/brand/circle_isotipo.svg"
+              src="/assets/brand/isologo/amaranthos-circle-isotipo.svg"
               alt="Selo Amaranthos"
               width={100}
               height={100}

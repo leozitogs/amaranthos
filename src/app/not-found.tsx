@@ -6,7 +6,7 @@ export default function NotFound() {
     <div className="bg-creme text-grafite flex min-h-[70vh] flex-col items-center justify-center px-4 text-center">
       <div className="mb-6">
         <Image
-          src="/assets/brand/isologo_vazado.svg"
+          src="/assets/brand/isologo/amaranthos-isologo-sem-contorno.svg"
           alt="Flor perdida"
           width={120}
           height={120}

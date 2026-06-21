@@ -6,7 +6,7 @@ Este documento apresenta o contexto de negócios, os objetivos do sistema, as re
 
 ## 1. Contexto e Motivação
 
-O **Amaranthos Ateliê** é uma marca de artesanato premium especializada em flores e buquês eternos, tecidos à mão em crochê estruturado de alta definição. Cada peça é tratada como uma obra de arte única que captura momentos especiais e dura para sempre.
+O **Amaranthos Ateliê** é uma marca de artesanato premium especializada em flores e buquês eternos, modelados à mão com hastes de chenille de alta definição. Cada peça é tratada como uma obra de arte única que captura momentos especiais e dura para sempre.
 
 A motivação para o desenvolvimento deste website é estabelecer um canal digital próprio, elegante e de alta conversão. O site deve proporcionar uma experiência visual premium (equivalente à qualidade física dos produtos) que conecte a audiência com o conceito de flores eternas, sirva como catálogo digital atualizado e permita a personalização interativa de buquês personalizados de forma virtual.
 
@@ -17,7 +17,7 @@ A motivação para o desenvolvimento deste website é estabelecer um canal digit
 - **Vitrine Premium**: Apresentar os produtos oficiais do ateliê (buquês, flores avulsas, centros de mesa e chaveiros) através de um design minimalista, elegante, fluido e com animações refinadas.
 - **Configurador de Buquês**: Proporcionar um assistente virtual onde o cliente possa escolher flores avulsas, folhagens, embalagens e fitas, visualizando a composição e o preço final em tempo real antes de prosseguir.
 - **Conversão via WhatsApp**: Encaminhar as intenções de compra e orçamentos configurados diretamente para o WhatsApp comercial do ateliê, com mensagens estruturadas para facilitar o atendimento físico.
-- **Otimização de SEO**: Obter classificação orgânica excelente nos mecanismos de busca para consultas de presentes finos, flores eternas, crochê premium e decorações de alto padrão.
+- **Otimização de SEO**: Obter classificação orgânica excelente nos mecanismos de busca para consultas de presentes finos, flores eternas, chenille premium e decorações de alto padrão.
 - **Desempenho Móvel**: Garantir carregamento ultrarrápido (Core Web Vitals na zona verde) mesmo em conexões móveis limitadas, considerando que a maior parte da audiência acessa o site via smartphones.
 
 ---
