@@ -71,8 +71,11 @@ export default function Hero() {
         texto ocupa 618/1920 (32.1875%); o texto nunca invade o centro vazado do
         portal-hero (sem spoiler da proxima cena).
       */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-[25] flex w-[32.1875vw] items-center pl-[9.6vw]">
-        <div className="w-full" style={{ transform: layerTransform(PARALLAX.contentLeft) }}>
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-[25] flex w-[32.1875vw] items-center pl-[12.5vw]">
+        <div
+          className="-mt-28.5 w-full"
+          style={{ transform: layerTransform(PARALLAX.contentLeft) }}
+        >
           <HeroCopy revealed={revealed} reduced={reduced} />
         </div>
       </div>
@@ -80,11 +83,11 @@ export default function Hero() {
       <HeroFrames opened={opened} animate={!reduced} onOpened={() => setRevealed(true)} />
 
       {/*
-        Cards da direita: NA FRENTE dos inputs (z-40), nitidos como na referencia.
+        Cards da direita: ATRAS dos inputs (z-30), como solicitado.
         Zona segura: a extremidade esquerda dos cards comeca em 1404/1920
         (73.125%), nunca alcancando o centro do portal.
       */}
-      <div className="pointer-events-none absolute inset-y-0 right-0 left-[73.125vw] z-40 flex items-center pr-[2.6vw]">
+      <div className="pointer-events-none absolute inset-y-0 right-0 left-[73.125vw] z-[30] flex items-center pr-[2.6vw]">
         <div
           className="pointer-events-auto w-full"
           style={{ transform: layerTransform(PARALLAX.contentRight) }}

@@ -56,10 +56,10 @@ export const PARALLAX: Record<
 > = {
   portalBg: { x: 10, y: 5 }, // video de fundo (mais profundo)
   portalDepth: { x: 20, y: 10 }, // flores-desfocadas (atras do portal, da profundidade no buraco)
-  frames: { x: 0, y: 0 }, // portal-hero.png travado: sem zoom e sem drift (centro vazado fixo, sem spoiler)
+  frames: { x: 10, y: 1.5 }, // portal-hero.png travado: sem zoom e sem drift (centro vazado fixo, sem spoiler)
   inputFrames: { x: 80, y: 40 }, // left-input.png e right-input.png: parallax intenso, a folhagem varre o texto
-  contentLeft: { x: 26, y: 13 }, // texto do hero (atras dos inputs, deriva menos que a folhagem)
-  contentRight: { x: 36, y: 18 }, // vitrine de cards
+  contentLeft: { x: 15, y: 8.5 }, // texto do hero (atras dos inputs, deriva menos que a folhagem)
+  contentRight: { x: 30, y: 16.5 }, // vitrine de cards
   bokeh: { x: 56, y: 28 }, // bokeh extra (se usado)
 };
 

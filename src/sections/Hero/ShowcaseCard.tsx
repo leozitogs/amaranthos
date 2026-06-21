@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { Play } from 'lucide-react';
 import type { ShowcaseItem } from './hero-data';
 
@@ -26,18 +25,12 @@ export function ShowcaseCard({ item, index, total }: ShowcaseCardProps) {
   const counter = `${String(index + 1).padStart(2, '0')}/${String(total).padStart(2, '0')}`;
 
   return (
-    <article className="group relative h-[250px] w-[190px] shrink-0 overflow-hidden rounded-[24px] shadow-[var(--shadow-sm)] transition-[transform,box-shadow] duration-[var(--duration-normal)] [transition-timing-function:var(--ease-expo)] hover:shadow-[var(--shadow-md)] motion-safe:hover:scale-[1.02]">
-      {/* Imagem real do buque como background */}
-      <Image
-        src={item.image}
-        alt=""
-        fill
-        className="object-cover transition-transform duration-[var(--duration-normal)] [transition-timing-function:var(--ease-expo)] motion-safe:group-hover:scale-105"
-        sizes="190px"
-      />
+    <article className="group relative h-[190px] w-[190px] shrink-0 overflow-hidden rounded-[24px] shadow-[var(--shadow-sm)] transition-[height,transform,box-shadow] duration-[var(--duration-normal)] [transition-timing-function:var(--ease-expo)] hover:h-[240px] hover:shadow-[var(--shadow-md)] motion-safe:hover:scale-[1.02]">
+      {/* Fundo generico com gradiente da paleta Amaranthos */}
+      <div className="from-vinho/45 via-rosa/30 to-menta/40 absolute inset-0 bg-gradient-to-br" />
 
-      {/* Overlay de leitura: grafite 18%, chapado */}
-      <div className="absolute inset-0 bg-[rgba(42,31,36,0.18)]" />
+      {/* Overlay de leitura sutil */}
+      <div className="bg-grafite/10 absolute inset-0" />
 
       {/* Contador superior direito */}
       <span
