@@ -3,11 +3,11 @@ import { cn } from '@/lib/utils';
 
 const isologoAssets = {
   default: {
-    src: '/assets/brand/isologo.svg',
+    src: '/assets/brand/isologo/amaranthos-isologo.svg',
     alt: 'Isologo da Amaranthos Atelie',
   },
   outline: {
-    src: '/assets/brand/isologo_vazado.svg',
+    src: '/assets/brand/isologo/amaranthos-isologo-sem-contorno.svg',
     alt: 'Isologo vazado da Amaranthos Atelie',
   },
 } as const;

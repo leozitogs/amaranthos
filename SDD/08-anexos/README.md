@@ -8,8 +8,8 @@ Este documento reúne o glossário de termos do domínio do **Amaranthos Ateliê
 
 Para garantir o alinhamento de linguagem técnica e comercial entre desenvolvedores, designers e o Product Owner, definem-se os seguintes termos:
 
-- **Buquê Eterno**: Arranjo floral tecido manualmente com fios de crochê estruturado, projetado para durar de forma vitalícia sem necessidade de irrigação ou luz solar.
-- **Crochê Estruturado**: Técnica artesanal refinada que utiliza pontos firmes e estruturação metálica leve e invisível para sustentar as pétalas e folhas das flores de crochê na posição correta.
+- **Buquê Eterno**: Arranjo floral feito manualmente com hastes de chenille estruturadas, projetado para durar de forma vitalícia sem necessidade de irrigação ou luz solar.
+- **Modelagem de Chenille**: Técnica artesanal refinada que utiliza modelagem de hastes de chenille com estruturação leve e invisível para sustentar as pétalas e folhas das flores na posição correta.
 - **Haste**: Unidade individual de flor ou folhagem com seu caule estruturado. No configurador virtual, os buquês são precificados somando as quantidades de hastes de cada espécie.
 - **Fita**: O cordão ou fita decorativa (geralmente cetim ou juta) utilizada para amarrar o buquê na junção de suas hastes.
 - **Embalagem**: O invólucro protetor externo que envolve o buquê (papel kraft grosso ou tecidos rústicos como juta).

@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const SRC = join(__dirname, '..', 'src');
-const ASSETS = join(__dirname, '..', 'assets');
+const ASSETS = join(__dirname, '..', 'public', 'assets');
 
 function arquivosDe(dir: string): string[] {
   return readdirSync(dir).flatMap((nome) => {

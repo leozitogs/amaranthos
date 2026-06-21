@@ -21,7 +21,7 @@ export default function Sobre() {
             </p>
             <div className="pt-4">
               <Image
-                src="/assets/brand/gisele_estefane.svg"
+                src="/assets/brand/tipografia/gisele-estefane.svg"
                 alt="Assinatura Gisele Estefane"
                 width={150}
                 height={50}
@@ -32,7 +32,7 @@ export default function Sobre() {
           </div>
           <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-2xl border border-[color:var(--color-border)] bg-[color:var(--color-card)] p-8">
             <Image
-              src="/assets/brand/isologo_vazado.svg"
+              src="/assets/brand/isologo/amaranthos-isologo-sem-contorno.svg"
               alt="Mascote Amaranthos"
               width={200}
               height={200}

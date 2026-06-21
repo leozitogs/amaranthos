@@ -3,15 +3,15 @@ import { DM_Sans, Inter } from 'next/font/google';
 
 export const mainstay = localFont({
   src: [
-    { path: '../../public/fonts/Mainstay.otf', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/Mainstay.ttf', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/Mainstay/Mainstay.otf', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/Mainstay/Mainstay.ttf', weight: '400', style: 'normal' },
   ],
   variable: '--font-mainstay',
   display: 'swap',
 });
 
 export const moontime = localFont({
-  src: '../../public/fonts/moontime-regular.ttf',
+  src: '../../public/fonts/Moontime/moontime-regular.ttf',
   variable: '--font-moontime',
   display: 'swap',
   weight: '400',

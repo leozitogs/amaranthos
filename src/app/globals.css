@@ -3,8 +3,8 @@
 @font-face {
   font-family: 'Mainstay';
   src:
-    url('/fonts/Mainstay.otf') format('opentype'),
-    url('/fonts/Mainstay.ttf') format('truetype');
+    url('/fonts/Mainstay/Mainstay.otf') format('opentype'),
+    url('/fonts/Mainstay/Mainstay.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -12,7 +12,7 @@
 
 @font-face {
   font-family: 'Moontime';
-  src: url('/fonts/moontime-regular.ttf') format('truetype');
+  src: url('/fonts/Moontime/moontime-regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;

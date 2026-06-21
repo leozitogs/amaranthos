@@ -10,7 +10,7 @@ As interfaces de tipo estão centralizadas em [src/lib/types.ts](file:///c:/Desi
 
 ### Tipos de Entidades
 
-- **`Flor`**: Haste de flor avulsa tecida em crochê.
+- **`Flor`**: Haste de flor avulsa moldada em chenille.
   - `id`: string única
   - `nome`: string
   - `precoCusto`: número inteiro (centavos)
