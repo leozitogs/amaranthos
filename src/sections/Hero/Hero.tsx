@@ -1,19 +1,97 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import { useLenis } from '@/components/providers/LenisProvider';
+import { usePrefersReducedMotion } from '@/lib/hooks/usePrefersReducedMotion';
+import { PARALLAX, SCENE_IMAGES } from './hero-data';
+import { layerTransform } from './parallax-style';
+import { usePointerParallax } from './usePointerParallax';
+import { usePreloadImages } from './usePreloadImages';
+import { HeroPortal } from './HeroPortal';
+import { HeroFrames } from './HeroFrames';
+import { HeroCopy } from './HeroCopy';
+import { HeroShowcase } from './HeroShowcase';
+
+/**
+ * Hero | O Portal de Chenille (telas 1 e 2).
+ *
+ * Tela 1 (preloader): os frames cobrem o viewport ate os assets carregarem.
+ * Tela 2 (pos-load): os frames recuam, revelam o portal e o conteudo assenta
+ * com parallax de cursor. As telas 3 (zoom) e 4 (video + buque 3D) reaproveitam
+ * a ancora `portal-anchor` e a saida coreografavel do conteudo, sem implementar
+ * aqui.
+ */
 export default function Hero() {
+  const reduced = usePrefersReducedMotion();
+  const ready = usePreloadImages(SCENE_IMAGES);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const { stop, start } = useLenis();
+
+  const [revealed, setRevealed] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
+
+  // reduced-motion entra direto no estado aberto; senao espera o preload.
+  const opened = reduced || ready;
+
+  // Sem cursor (touch): parallax desligado.
+  useEffect(() => {
+    setIsTouch(window.matchMedia('(hover: none), (pointer: coarse)').matches);
+  }, []);
+
+  // Trava o scroll durante o load. Reduced-motion nao trava e ja assenta.
+  useEffect(() => {
+    if (reduced) {
+      setRevealed(true);
+      start();
+      return;
+    }
+    stop();
+  }, [reduced, stop, start]);
+
+  // Libera o scroll quando o hero assenta.
+  useEffect(() => {
+    if (revealed) start();
+  }, [revealed, start]);
+
+  const parallaxOn = revealed && !reduced && !isTouch;
+  usePointerParallax(rootRef, parallaxOn);
+
   return (
     <section
       id="inicio"
-      className="bg-creme text-grafite flex min-h-[60vh] flex-col items-center justify-center px-4 py-24"
+      ref={rootRef}
+      className="bg-creme relative h-[100svh] w-full overflow-hidden"
     >
-      <h1 className="font-mainstay text-vinho mb-4 text-center text-5xl md:text-7xl">
-        Amaranthos Atelie
-      </h1>
-      <p className="font-moontime text-menta-escuro mb-8 text-center text-2xl">
-        Atelie de flores que nao murcham
-      </p>
-      <p className="font-dm-sans text-grafite/80 max-w-xl text-center leading-relaxed">
-        Feitas a mao em Recife, com pecas que carregam tempo, afeto e um cuidado mais intimo com
-        cada flor.
-      </p>
+      <HeroPortal />
+
+      {/*
+        Texto da esquerda: ATRAS dos inputs (z-25, abaixo do z-30 dos paineis).
+        A folhagem dos inputs varre o texto com o parallax intenso, gerando
+        leitura completa ou parcial conforme o cursor. Zona segura: a coluna do
+        texto ocupa 618/1920 (32.1875%); o texto nunca invade o centro vazado do
+        portal-hero (sem spoiler da proxima cena).
+      */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-[25] flex w-[32.1875vw] items-center pl-[9.6vw]">
+        <div className="w-full" style={{ transform: layerTransform(PARALLAX.contentLeft) }}>
+          <HeroCopy revealed={revealed} reduced={reduced} />
+        </div>
+      </div>
+
+      <HeroFrames opened={opened} animate={!reduced} onOpened={() => setRevealed(true)} />
+
+      {/*
+        Cards da direita: NA FRENTE dos inputs (z-40), nitidos como na referencia.
+        Zona segura: a extremidade esquerda dos cards comeca em 1404/1920
+        (73.125%), nunca alcancando o centro do portal.
+      */}
+      <div className="pointer-events-none absolute inset-y-0 right-0 left-[73.125vw] z-40 flex items-center pr-[2.6vw]">
+        <div
+          className="pointer-events-auto w-full"
+          style={{ transform: layerTransform(PARALLAX.contentRight) }}
+        >
+          <HeroShowcase revealed={revealed} reduced={reduced} />
+        </div>
+      </div>
     </section>
   );
 }

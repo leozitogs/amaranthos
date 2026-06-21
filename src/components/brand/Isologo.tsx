@@ -32,6 +32,7 @@ export function Isologo({
   const asset = isologoAssets[variant];
 
   return (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={asset.src}
       alt={decorative ? '' : (alt ?? asset.alt)}

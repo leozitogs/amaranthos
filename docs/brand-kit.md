@@ -112,48 +112,50 @@ Para hierarquia de texto, bordas, divisores e estados disabled. Escala em **OKLC
 
 ## 3. Tipografia
 
-### 3.1. Fontes da marca (no pacote `assets/brand/fontsBranding/`)
+> Sistema oficial v2 (junho de 2026). ViaodaLibre e Poppins foram oficializadas pela
+> PO. Mainstay recua para uso exclusivo do logotipo e DM Sans fica descontinuada da UI.
 
-| Fonte        | Arquivo                         | Uso                                                      |
-| ------------ | ------------------------------- | -------------------------------------------------------- |
-| **Mainstay** | `Mainstay.otf` / `Mainstay.ttf` | Display principal — logo, H1 hero, títulos grandes       |
-| **Moontime** | `moontime-regular.ttf`          | Script secundária — "Atélie", tagline, detalhes afetivos |
+### 3.1. Fontes de marca, display e logotipo
 
-**Mainstay** é a serif script retrô com contorno duplo que define a marca (vista no logotipo). Uso reservado para momentos display.
+| Fonte           | Arquivo                                            | Uso                                                                         |
+| --------------- | -------------------------------------------------- | --------------------------------------------------------------------------- |
+| **Mainstay**    | `public/fonts/Mainstay/`                           | Logotipo e wordmark da marca apenas. Nao usar em UI nem em titulo de secao. |
+| **ViaodaLibre** | `public/fonts/ViaodaLibre/ViaodaLibre-Regular.ttf` | Display oficial: titulo do hero e titulos de secao.                         |
+| **Moontime**    | `public/fonts/Moontime/moontime-regular.ttf`       | Script afetiva: "Atelie", taglines, detalhes. Sempre isolada.               |
 
-**Moontime** é o script cursivo fluido, usado principalmente para a palavra "Atélie" que acompanha o logotipo.
+### 3.2. Fontes de UI
 
-### 3.2. Fontes de UI (Google Fonts)
+| Fonte       | Uso                                                                        | Pesos                                                                                    |
+| ----------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **Poppins** | UI e corpo oficiais: header, nav, corpo, CTAs, labels                      | Light 300 (header, nav, labels), Regular 400 (corpo), Medium 500 e SemiBold 600 (enfase) |
+| **Inter**   | Numeros e precos com fonte tabular (tnum)                                  | 400, 500, 600                                                                            |
+| **DM Sans** | Descontinuada, substituida por Poppins. Mantida no codigo so ate o cleanup |                                                                                          |
 
-Pra textos de interface, botões, corpo de texto, labels.
+### 3.3. Hierarquia tipografica
 
-| Fonte       | Uso                                         | Peso usados   |
-| ----------- | ------------------------------------------- | ------------- |
-| **DM Sans** | Primary UI — body, CTAs, forms, navigation  | 400, 500, 700 |
-| **Inter**   | Fallback / números — preços, códigos, dados | 400, 500, 600 |
+| Nivel        | Fonte       | Tamanho                    | Peso | Uso                        |
+| ------------ | ----------- | -------------------------- | ---- | -------------------------- |
+| Display XL   | ViaodaLibre | `clamp(3rem, 8vw, 6rem)`   | 400  | Hero                       |
+| Display L    | ViaodaLibre | `clamp(2rem, 5vw, 3.5rem)` | 400  | Titulos de secao           |
+| H1           | Poppins     | `2.25rem` (36px)           | 500  | Titulo de pagina           |
+| H2           | Poppins     | `1.75rem` (28px)           | 500  | Titulo de secao (UI)       |
+| H3           | Poppins     | `1.25rem` (20px)           | 500  | Nome de produto (card)     |
+| Header e nav | Poppins     | conforme contexto          | 300  | Menu, labels, rotulos      |
+| Script       | Moontime    | `1.5rem` (24px)            | 400  | "Atelie", taglines         |
+| Body         | Poppins     | `1rem` (16px)              | 400  | Texto corrido              |
+| Small        | Poppins     | `0.875rem` (14px)          | 400  | Descricao curta, metadados |
+| Caption      | Poppins     | `0.75rem` (12px)           | 500  | Labels, tags, badges       |
+| Preco        | Inter       | conforme contexto          | 500  | Numeros e valores          |
 
-### 3.3. Hierarquia tipográfica
+### 3.4. Regras de uso tipografico
 
-| Nível      | Fonte    | Tamanho                    | Peso | Uso                                         |
-| ---------- | -------- | -------------------------- | ---- | ------------------------------------------- |
-| Display XL | Mainstay | `clamp(3rem, 8vw, 6rem)`   | 400  | Hero "Amaranthos"                           |
-| Display L  | Mainstay | `clamp(2rem, 5vw, 3.5rem)` | 400  | Section heros ("Buquês", "Centros de mesa") |
-| H1         | DM Sans  | `2.25rem` (36px)           | 500  | Título de página                            |
-| H2         | DM Sans  | `1.75rem` (28px)           | 500  | Título de seção                             |
-| H3         | DM Sans  | `1.25rem` (20px)           | 500  | Nome de produto (card)                      |
-| Script     | Moontime | `1.5rem` (24px)            | 400  | "Atélie", taglines afetivas                 |
-| Body       | DM Sans  | `1rem` (16px)              | 400  | Texto corrido                               |
-| Small      | DM Sans  | `0.875rem` (14px)          | 400  | Descrição curta, metadados                  |
-| Caption    | DM Sans  | `0.75rem` (12px)           | 500  | Labels, tags, badges                        |
-
-### 3.4. Regras de uso tipográfico
-
-- **Mainstay nunca em corpo de texto** — ilegível em tamanhos pequenos, reservado pra display
-- **Moontime sempre isolada** — uma palavra ou frase curta, nunca parágrafo
-- **DM Sans como default** — 95% do site usa DM Sans, mantém legibilidade mobile
-- **Números de preço em Inter tabular** — usar `font-feature-settings: "tnum"` pra alinhamento vertical de R$ em listas
-- **Line-height generoso** — 1.6 pra body, 1.4 pra títulos (respeito à respiração da marca)
-- **Sentence case, nunca ALL CAPS** — a voz Amaranthos não grita
+- **Mainstay so no logotipo** | nunca em UI, titulo de secao ou corpo
+- **ViaodaLibre so em display** | hero e titulos de secao, nunca em corpo
+- **Moontime sempre isolada** | uma palavra ou frase curta, nunca paragrafo
+- **Poppins como default da UI** | header e nav em Light 300, corpo em Regular 400
+- **Numeros de preco em Inter tabular** | usar `font-feature-settings: "tnum"`
+- **Line-height generoso** | 1.6 pra body, 1.4 pra titulos
+- **Sentence case, nunca ALL CAPS** | a voz Amaranthos nao grita
 
 ---
 
@@ -406,14 +408,14 @@ Lista do que ainda falta produzir — não bloqueia MVP, mas entra em versões s
 
 Ao importar assets no código, **sempre** usar os arquivos em `assets/` do repositório como source of truth. Nunca recolorir, nunca re-exportar de ferramentas externas sem confirmar com a Gisele.
 
-Fontes:
+Fontes oficiais:
 
-- `assets/brand/fontsBranding/Mainstay.otf` — display primária
-- `assets/brand/fontsBranding/Mainstay.ttf` — fallback
-- `assets/brand/fontsBranding/moontime-regular.ttf` — script secundária
-- **DM Sans** e **Inter** — Google Fonts (npm install via `next/font` ou similar)
-
----
+- `public/fonts/ViaodaLibre/ViaodaLibre-Regular.ttf`: display (hero e titulos de secao)
+- `public/fonts/Poppins/`: UI e corpo (Light 300, Regular 400, Medium 500, SemiBold 600)
+- `public/fonts/Moontime/moontime-regular.ttf`: script afetiva isolada
+- `public/fonts/Mainstay/`: logotipo e wordmark da marca apenas
+- **Inter**: numeros e precos tabulares (Google Fonts ou local)
+- **DM Sans**: descontinuada, substituida por Poppins
 
 _Brand kit Amaranthos Atélie — Recife, PE. Abril 2026._
 _Documento mantido por Léo (Leovox Studios) como tech lead do projeto._
