@@ -6,9 +6,12 @@ import Footer from '@/components/layout/Footer';
 import { LenisProvider } from '@/components/providers/LenisProvider';
 
 export const metadata: Metadata = {
-  title: 'Amaranthos Atelie | Flores que nao murcham',
+  title: 'Amaranthos Atelie - Flores que nao murcham',
   description:
     'Flores feitas a mao em hastes de chenille que nao murcham. Atelie artesanal premium em Recife, PE.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
