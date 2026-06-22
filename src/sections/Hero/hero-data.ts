@@ -34,7 +34,7 @@ export const HERO_VIDEO = '/assets/cenas/hero/motion-hero-4k.mp4';
 const REF_WIDTH = 1920;
 const coverVw = 100;
 const leftOpenRightEdgeVw = (1000 / REF_WIDTH) * 100; // 52.0833vw
-const rightOpenLeftEdgeVw = (900 / REF_WIDTH) * 100; // 46.875vw
+const rightOpenLeftEdgeVw = (1000 / REF_WIDTH) * 100; // 46.875vw
 
 export const FRAME = {
   coverVw,
@@ -51,15 +51,16 @@ export const FRAME = {
 export type ParallaxFactor = { x: number; y: number };
 
 export const PARALLAX: Record<
-  'portalBg' | 'portalDepth' | 'frames' | 'inputFrames' | 'contentLeft' | 'contentRight' | 'bokeh',
+  'portalBg' | 'portalDepth' | 'frames' | 'inputFrameLeft' | 'inputFrameRight' | 'contentLeft' | 'contentRight' | 'bokeh',
   ParallaxFactor
 > = {
   portalBg: { x: 10, y: 5 }, // video de fundo (mais profundo)
   portalDepth: { x: 20, y: 10 }, // flores-desfocadas (atras do portal, da profundidade no buraco)
   frames: { x: 10, y: 1.5 }, // portal-hero.png travado: sem zoom e sem drift (centro vazado fixo, sem spoiler)
-  inputFrames: { x: 80, y: 40 }, // left-input.png e right-input.png: parallax intenso, a folhagem varre o texto
+  inputFrameLeft: { x: 65, y: 40 }, // painel esquerdo: recua levemente na mesma direção do mouse
+  inputFrameRight: { x: 65, y: 40 }, // painel direito: acompanha fluidamente o movimento do mouse
   contentLeft: { x: 15, y: 8.5 }, // texto do hero (atras dos inputs, deriva menos que a folhagem)
-  contentRight: { x: 30, y: 16.5 }, // vitrine de cards
+  contentRight: { x: 15, y: 8.5 }, // vitrine de cards
   bokeh: { x: 56, y: 28 }, // bokeh extra (se usado)
 };
 

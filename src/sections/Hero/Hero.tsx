@@ -87,9 +87,9 @@ export default function Hero() {
         Zona segura: a extremidade esquerda dos cards comeca em 1404/1920
         (73.125%), nunca alcancando o centro do portal.
       */}
-      <div className="pointer-events-none absolute inset-y-0 right-0 left-[73.125vw] z-[30] flex items-center pr-[2.6vw]">
+      <div className="pointer-events-none absolute inset-y-0 right-0 left-[71.125vw] z-[25] flex items-center">
         <div
-          className="pointer-events-auto w-full"
+          className="pointer-events-auto w-full -mt-45"
           style={{ transform: layerTransform(PARALLAX.contentRight) }}
         >
           <HeroShowcase revealed={revealed} reduced={reduced} />

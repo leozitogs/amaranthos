@@ -58,31 +58,72 @@ export function HeroShowcase({ revealed, reduced }: HeroShowcaseProps) {
     [reduced]
   );
 
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const cardVariants = {
+    hidden: {
+      opacity: 0,
+      y: reduced ? 0 : -60,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: EASE,
+      },
+    },
+  };
+
+  const dotsVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: 'easeOut',
+      },
+    },
+  };
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: reduced ? 0 : -24, scale: reduced ? 1 : 0.98 }}
-      animate={
-        revealed
-          ? { opacity: 1, y: 0, scale: 1 }
-          : { opacity: 0, y: reduced ? 0 : -24, scale: reduced ? 1 : 0.98 }
-      }
-      transition={{ duration: 0.5, ease: EASE, delay: 0.3 }}
+      variants={containerVariants}
+      initial="hidden"
+      animate={revealed ? 'visible' : 'hidden'}
       className="w-full"
     >
       <div
         ref={scrollerRef}
         onScroll={handleScroll}
-        className="relative flex snap-x snap-mandatory [scrollbar-width:none] gap-5 overflow-x-auto pb-2 [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+        className="relative flex h-[256px] items-end snap-x snap-mandatory [scrollbar-width:none] gap-5 overflow-x-auto pb-2 pr-[2.6vw] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
       >
         {SHOWCASE_ITEMS.map((item, index) => (
-          <div key={item.id} className="snap-start">
+          <motion.div
+            key={item.id}
+            variants={cardVariants}
+            className="snap-start"
+          >
             <ShowcaseCard item={item} index={index} total={total} />
-          </div>
+          </motion.div>
         ))}
       </div>
 
       {/* Dots: pilulas finas com area de toque acessivel */}
-      <div className="mt-6 flex items-center gap-2" role="tablist" aria-label="Trabalhos do atelie">
+      <motion.div
+        variants={dotsVariants}
+        className="mt-6 flex items-center gap-2"
+        role="tablist"
+        aria-label="Trabalhos do atelie"
+      >
         {SHOWCASE_ITEMS.map((item, index) => {
           const current = index === active;
           return (
@@ -107,7 +148,7 @@ export function HeroShowcase({ revealed, reduced }: HeroShowcaseProps) {
             </button>
           );
         })}
-      </div>
+      </motion.div>
     </motion.div>
   );
 }

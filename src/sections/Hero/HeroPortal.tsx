@@ -52,7 +52,7 @@ export function HeroPortal() {
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className="object-cover scale-105"
         />
       </div>
 

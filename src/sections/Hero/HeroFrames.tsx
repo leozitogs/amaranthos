@@ -35,50 +35,57 @@ const RIGHT_OPEN = `${FRAME.rightOpenVw.toFixed(4)}vw`;
  */
 export function HeroFrames({ opened, animate, onOpened }: HeroFramesProps) {
   return (
-    <div
-      className="pointer-events-none absolute inset-0 z-30"
-      style={{ transform: layerTransform(PARALLAX.inputFrames) }}
-    >
+    <>
       {/* Painel Esquerdo */}
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 w-screen overflow-hidden will-change-transform"
-        style={{
-          transform: `translate3d(${opened ? LEFT_OPEN : '0vw'}, 0, 0)`,
-          transition: animate ? OPEN_TRANSITION : undefined,
-        }}
-        onTransitionEnd={(event) => {
-          if (event.propertyName === 'transform' && opened) onOpened();
-        }}
+        className="pointer-events-none absolute inset-0 z-30"
+        style={{ transform: layerTransform(PARALLAX.inputFrameLeft) }}
       >
-        <Image
-          src="/assets/cenas/load/left-input.png"
-          alt=""
-          aria-hidden
-          fill
-          priority
-          sizes="100vw"
-          className="pointer-events-none scale-110 object-cover"
-        />
+        <div
+          className="pointer-events-none absolute top-[-270px] bottom-[-270px] left-0 w-screen will-change-transform"
+          style={{
+            transform: `translate3d(${opened ? LEFT_OPEN : '0vw'}, 0, 0)`,
+            transition: animate ? OPEN_TRANSITION : undefined,
+          }}
+          onTransitionEnd={(event) => {
+            if (event.propertyName === 'transform' && opened) onOpened();
+          }}
+        >
+          <Image
+            src="/assets/cenas/load/left-input.png"
+            alt=""
+            aria-hidden
+            fill
+            priority
+            sizes="100vw"
+            className="pointer-events-none object-fit: cover object-left origin-left"
+          />
+        </div>
       </div>
 
       {/* Painel Direito */}
       <div
-        className="pointer-events-none absolute inset-y-0 left-0 w-screen overflow-hidden will-change-transform"
-        style={{
-          transform: `translate3d(${opened ? RIGHT_OPEN : '0vw'}, 0, 0)`,
-          transition: animate ? OPEN_TRANSITION : undefined,
-        }}
+        className="pointer-events-none absolute inset-0 z-30"
+        style={{ transform: layerTransform(PARALLAX.inputFrameRight) }}
       >
-        <Image
-          src="/assets/cenas/load/right-input.png"
-          alt=""
-          aria-hidden
-          fill
-          priority
-          sizes="100vw"
-          className="pointer-events-none scale-110 object-cover"
-        />
+        <div
+          className="pointer-events-none absolute top-[-270px] bottom-[-270px] left-0 w-screen will-change-transform overflow-hidden"
+          style={{
+            transform: `translate3d(${opened ? RIGHT_OPEN : '0vw'}, 0, 0)`,
+            transition: animate ? OPEN_TRANSITION : undefined,
+          }}
+        >
+          <Image
+            src="/assets/cenas/load/right-input.png"
+            alt=""
+            aria-hidden
+            fill
+            priority
+            sizes="100vw"
+            className="pointer-events-none object-fit: cover object-right origin-right"
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

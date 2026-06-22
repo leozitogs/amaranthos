@@ -25,7 +25,7 @@ export function ShowcaseCard({ item, index, total }: ShowcaseCardProps) {
   const counter = `${String(index + 1).padStart(2, '0')}/${String(total).padStart(2, '0')}`;
 
   return (
-    <article className="group relative h-[190px] w-[190px] shrink-0 overflow-hidden rounded-[24px] shadow-[var(--shadow-sm)] transition-[height,transform,box-shadow] duration-[var(--duration-normal)] [transition-timing-function:var(--ease-expo)] hover:h-[240px] hover:shadow-[var(--shadow-md)] motion-safe:hover:scale-[1.02]">
+    <article className="group relative h-[190px] w-[190px] shrink-0 overflow-hidden rounded-[24px] shadow-[var(--shadow-sm)] transition-[height,transform,box-shadow] duration-[var(--duration-normal)] [transition-timing-function:var(--ease-expo)] hover:h-[240px] hover:shadow-[var(--shadow-md)] motion-safe:hover:scale-[1.02] origin-bottom">
       {/* Fundo generico com gradiente da paleta Amaranthos */}
       <div className="from-vinho/45 via-rosa/30 to-menta/40 absolute inset-0 bg-gradient-to-br" />
 
