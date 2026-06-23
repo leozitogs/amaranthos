@@ -27,6 +27,7 @@ type HeroShowcaseProps = {
  * mantendo a sensacao de carrossel.
  */
 export function HeroShowcase({ revealed, reduced }: HeroShowcaseProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
   const total = SHOWCASE_ITEMS.length;
@@ -58,31 +59,25 @@ export function HeroShowcase({ revealed, reduced }: HeroShowcaseProps) {
     [reduced]
   );
 
-  // Mapeia o scroll vertical do mouse para scroll horizontal dos cards,
-  // mantendo o comportamento nativo do touchpad (deslizar para o lado correspondente).
+  // Mapeia o scroll vertical do mouse no container para scroll horizontal dos cards,
+  // mantendo o comportamento nativo do touchpad.
   useEffect(() => {
+    const container = containerRef.current;
     const scroller = scrollerRef.current;
-    if (!scroller) return;
+    if (!container || !scroller) return;
 
     const handleWheel = (e: WheelEvent) => {
-      // Se for rolagem predominantemente vertical
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
-        // Diferencia mouse wheel de touchpad no Windows
-        const isMouseWheel =
-          Math.abs(e.deltaY) >= 100 ||
-          e.deltaY % 100 === 0 ||
-          e.deltaY % 120 === 0;
-
-        if (isMouseWheel) {
-          e.preventDefault();
-          scroller.scrollLeft += e.deltaY;
-        }
+      // Se houver rolagem vertical, traduz para rolagem horizontal no container dos cards
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        e.stopPropagation();
+        scroller.scrollLeft += e.deltaY;
       }
     };
 
-    scroller.addEventListener('wheel', handleWheel, { passive: false });
+    container.addEventListener('wheel', handleWheel, { passive: false });
     return () => {
-      scroller.removeEventListener('wheel', handleWheel);
+      container.removeEventListener('wheel', handleWheel);
     };
   }, []);
 
@@ -124,6 +119,7 @@ export function HeroShowcase({ revealed, reduced }: HeroShowcaseProps) {
 
   return (
     <motion.div
+      ref={containerRef}
       variants={containerVariants}
       initial="hidden"
       animate={revealed ? 'visible' : 'hidden'}
