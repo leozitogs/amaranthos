@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SHOWCASE_ITEMS } from './hero-data';
 import { ShowcaseCard } from './ShowcaseCard';
@@ -57,6 +57,34 @@ export function HeroShowcase({ revealed, reduced }: HeroShowcaseProps) {
     },
     [reduced]
   );
+
+  // Mapeia o scroll vertical do mouse para scroll horizontal dos cards,
+  // mantendo o comportamento nativo do touchpad (deslizar para o lado correspondente).
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      // Se for rolagem predominantemente vertical
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        // Diferencia mouse wheel de touchpad no Windows
+        const isMouseWheel =
+          Math.abs(e.deltaY) >= 100 ||
+          e.deltaY % 100 === 0 ||
+          e.deltaY % 120 === 0;
+
+        if (isMouseWheel) {
+          e.preventDefault();
+          scroller.scrollLeft += e.deltaY;
+        }
+      }
+    };
+
+    scroller.addEventListener('wheel', handleWheel, { passive: false });
+    return () => {
+      scroller.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
 
   const containerVariants = {
     hidden: {},

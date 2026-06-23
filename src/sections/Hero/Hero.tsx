@@ -48,9 +48,15 @@ export default function Hero() {
     stop();
   }, [reduced, stop, start]);
 
-  // Libera o scroll quando o hero assenta.
+  // Libera o scroll quando o hero assenta e sinaliza a revelacao.
   useEffect(() => {
-    if (revealed) start();
+    if (revealed) {
+      start();
+      if (typeof window !== 'undefined') {
+        (window as unknown as { __heroRevealed?: boolean }).__heroRevealed = true;
+        window.dispatchEvent(new CustomEvent('hero-revealed'));
+      }
+    }
   }, [revealed, start]);
 
   const parallaxOn = revealed && !reduced && !isTouch;
