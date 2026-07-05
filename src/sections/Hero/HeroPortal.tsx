@@ -22,7 +22,7 @@ import { layerTransform } from './parallax-style';
  *   (portalZoom), opacity do data-hero-layer="portal" (portalFade) e opacity do
  *   data-hero-layer="portal-backdrop" (sai junto com a entrada do video).
  */
-export function HeroPortal() {
+export function HeroPortal({ children }: { children?: React.ReactNode }) {
   return (
     <div className="absolute inset-0 overflow-hidden" data-hero-layer="portal">
       {/* z-10 | frame inicial do video atras do portal (profundidade pela abertura) */}
@@ -43,9 +43,9 @@ export function HeroPortal() {
         />
       </div>
 
-      {/* z-20 | moldura do portal, travada (sem zoom e sem parallax na Fase 2) */}
+      {/* z-[29] | moldura do portal, travada (sem zoom e sem parallax na Fase 2) */}
       <div
-        className="pointer-events-none absolute inset-0 z-20"
+        className="pointer-events-none absolute inset-0 z-[29]"
         style={{ transform: layerTransform(PARALLAX.frames) }}
         aria-hidden
       >
@@ -63,6 +63,7 @@ export function HeroPortal() {
             sizes="100vw"
             className="scale-105 object-cover"
           />
+          {children}
         </div>
       </div>
 

@@ -179,50 +179,50 @@ export default function Hero() {
         <HeroScrollScene sceneRef={sceneRef} />
 
         {/* Portal: moldura + flores desfocadas + ancora de zoom (z-10, z-20) */}
-        <HeroPortal />
-
-        {/*
-          Coluna esquerda: texto da marca inicial (z-25).
-          ATRAS dos paineis (z-30).
-          data-hero-layer="ui-left" para o scroll-storyteller animar saida (Fase 3).
-        */}
-        <div
-          className="pointer-events-none absolute inset-y-0 left-0 z-[25] flex w-[32.1875vw] items-center pl-[12.5vw]"
-          data-hero-layer="ui-left"
-        >
+        <HeroPortal>
+          {/*
+            Coluna esquerda: texto da marca inicial (z-25).
+            ATRAS dos paineis (z-30).
+            data-hero-layer="ui-left" para o scroll-storyteller animar saida (Fase 3).
+          */}
           <div
-            className="-mt-28.5 w-full pointer-events-auto"
-            style={{ transform: layerTransform(PARALLAX.contentLeft) }}
+            className="pointer-events-none absolute inset-y-0 left-0 z-[25] flex w-[32.1875vw] items-center pl-[12.5vw]"
+            data-hero-layer="ui-left"
           >
-            <HeroCopy revealed={revealed} reduced={reduced} />
+            <div
+              className="-mt-28.5 w-full pointer-events-auto"
+              style={{ transform: layerTransform(PARALLAX.contentLeft) }}
+            >
+              <HeroCopy revealed={revealed} reduced={reduced} />
+            </div>
           </div>
-        </div>
+
+          {/*
+            Coluna direita: vitrine de cards (z-25).
+            ATRAS dos paineis (z-30). Zona segura: comeca em 71.125vw.
+            data-hero-layer="ui-right" para o scroll-storyteller animar saida (Fase 3).
+          */}
+          <div
+            className="pointer-events-none absolute inset-y-0 right-0 left-[71.125vw] z-[25] flex items-center"
+            data-hero-layer="ui-right"
+          >
+            <div
+              className="pointer-events-auto -mt-45 w-full"
+              style={{ transform: layerTransform(PARALLAX.contentRight) }}
+            >
+              <HeroShowcase revealed={revealed} reduced={reduced} />
+            </div>
+          </div>
+
+          {/*
+            Indicador de scroll (z-28, base centro). Aparece apos a revelacao.
+            pulsing: true na Fase 2 antes do scroll, false quando scroll comeca.
+          */}
+          {revealed && <HeroScrollHint pulsing={pulsing} />}
+        </HeroPortal>
 
         {/* Paineis de chenille (z-30): Fase 1 fechados, Fase 2 abertos lateralmente */}
         <HeroFrames opened={opened} animate={!reduced} onOpened={() => setRevealed(true)} />
-
-        {/*
-          Coluna direita: vitrine de cards (z-25).
-          ATRAS dos paineis (z-30). Zona segura: comeca em 71.125vw.
-          data-hero-layer="ui-right" para o scroll-storyteller animar saida (Fase 3).
-        */}
-        <div
-          className="pointer-events-none absolute inset-y-0 right-0 left-[71.125vw] z-[25] flex items-center"
-          data-hero-layer="ui-right"
-        >
-          <div
-            className="pointer-events-auto -mt-45 w-full"
-            style={{ transform: layerTransform(PARALLAX.contentRight) }}
-          >
-            <HeroShowcase revealed={revealed} reduced={reduced} />
-          </div>
-        </div>
-
-        {/*
-          Indicador de scroll (z-28, base centro). Aparece apos a revelacao.
-          pulsing: true na Fase 2 antes do scroll, false quando scroll comeca.
-        */}
-        {revealed && <HeroScrollHint pulsing={pulsing} />}
 
         {/*
           Copy e CTAs overlay pós-scroll (z-25).

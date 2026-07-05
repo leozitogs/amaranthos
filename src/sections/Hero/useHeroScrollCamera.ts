@@ -91,6 +91,7 @@ export function useHeroScrollCamera(refs: HeroRefs, reduced: boolean): void {
 
     let cleanupDownward: (() => void) | null = null;
     let cleanupUpward: (() => void) | null = null;
+    let cleanupForwardVideo: (() => void) | null = null;
     let timerId: number | null = null;
     let tl: gsap.core.Timeline | null = null;
 
@@ -119,181 +120,136 @@ export function useHeroScrollCamera(refs: HeroRefs, reduced: boolean): void {
         tl = gsap.timeline({
           paused: true,
           onComplete: () => {
-            // Define o estado ativo para o parallax de cursor
-            section.setAttribute('data-hero-phase', 'forest');
+            console.log('[triggerForward] Zoom timeline complete. Waiting for video to end...');
 
-            // Oculta os elementos que ja deram zoom para liberar eventos do mouse
-            if (portal) portal.style.display = 'none';
-            if (uiLeft) uiLeft.style.display = 'none';
-            if (uiRight) uiRight.style.display = 'none';
-            if (scrollHint) scrollHint.style.display = 'none';
-            if (frames) frames.style.display = 'none';
+            const startPhase2Forward = () => {
+              console.log('[triggerForward] startPhase2Forward invoked!');
 
-            // Stacking: a floresta de chenille assume a frente dos inputs
-            if (frames) frames.style.zIndex = '10';
-            const sceneRoot = refs.scene.current.root;
-            if (sceneRoot) sceneRoot.style.zIndex = '20';
+              // Define o estado ativo para o parallax de cursor
+              section.setAttribute('data-hero-phase', 'forest');
 
-            // Garante o estado final estavel do video
+              // Oculta os elementos que ja deram zoom para liberar eventos do mouse
+              if (portal) portal.style.display = 'none';
+              if (uiLeft) uiLeft.style.display = 'none';
+              if (uiRight) uiRight.style.display = 'none';
+              if (scrollHint) scrollHint.style.display = 'none';
+              if (frames) frames.style.display = 'none';
+
+              // Stacking: a floresta de chenille assume a frente dos inputs
+              if (frames) frames.style.zIndex = '10';
+              const sceneRoot = refs.scene.current.root;
+              if (sceneRoot) sceneRoot.style.zIndex = '20';
+
+              // Garante o estado final estavel do video
+              if (videoEl) {
+                videoEl.style.opacity = '1';
+              }
+              if (videoReversedEl) {
+                videoReversedEl.style.opacity = '0';
+                videoReversedEl.pause();
+              }
+
+              // Entrada suave da UI pos-scroll na floresta (copy + CTAs)
+              if (forestUi) {
+                gsap.to(
+                  forestUi,
+                  {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    onStart: () => {
+                      forestUi.style.pointerEvents = 'auto';
+                    },
+                    onComplete: () => {
+                      animating = false;
+                      inForest = true;
+
+                      // Libera o scroll para futuras secoes da pagina
+                      start();
+
+                      // Ativa os listeners para o scroll reverso
+                      setupUpwardListeners();
+                    },
+                  }
+                );
+              } else {
+                animating = false;
+                inForest = true;
+                start();
+                setupUpwardListeners();
+              }
+            };
+
             if (videoEl) {
-              videoEl.style.opacity = '1';
+              let timeoutId: number | null = null;
+
+              const endedHandler = () => {
+                console.log('[triggerForward] Forward video ended.');
+                if (videoEl.currentTime < 0.5) {
+                  console.log('[triggerForward] Ignored ended event due to race condition.');
+                  return;
+                }
+                cleanup();
+                startPhase2Forward();
+              };
+
+              const cleanup = () => {
+                videoEl.removeEventListener('ended', endedHandler);
+                if (timeoutId) {
+                  window.clearTimeout(timeoutId);
+                  timeoutId = null;
+                }
+                cleanupForwardVideo = null;
+              };
+
+              cleanupForwardVideo = cleanup;
+
+              // Safety timeout: o vídeo tem 3.1s restantes após a transição. Aguarda no máximo 4.5s.
+              timeoutId = window.setTimeout(() => {
+                console.warn('[triggerForward] Video ended event timed out. Triggering phase 2 fallback.');
+                cleanup();
+                startPhase2Forward();
+              }, 4500);
+
+              videoEl.addEventListener('ended', endedHandler);
+            } else {
+              startPhase2Forward();
             }
-            if (videoReversedEl) {
-              videoReversedEl.style.opacity = '0';
-              videoReversedEl.pause();
-            }
-
-            // Garante o estado final do forestUi
-            if (forestUi) {
-              forestUi.style.opacity = '1';
-              forestUi.style.transform = 'translateY(0px)';
-              forestUi.style.pointerEvents = 'auto';
-            }
-
-            animating = false;
-            inForest = true;
-
-            // Libera o scroll para futuras secoes da pagina
-            start();
-
-            // Ativa os listeners para o scroll reverso
-            setupUpwardListeners();
           },
         });
 
         // ----------------------------------------------------
-        // FASE 1: Zoom imersivo inicialmente lento (0.0s -> 1.5s)
+        // Zoom imersivo contínuo do portal e dos painéis (0.0s -> 2.4s)
+        // Usa o ease 'power3.in' (espelho matemático do 'power3.out' do reverse scroll).
+        // Inicia suavemente a partir da escala 1 (sem recuar/encolher, evitando expor bordas)
+        // e acelera rapidamente para o zoom final, garantindo uma transição fluida.
         // ----------------------------------------------------
+        const zoomElements = [portalFrame, frames].filter(Boolean) as HTMLElement[];
+
+        // Zoom imersivo contínuo de todos os elementos (portal, painéis e UIs) em uníssono (0.0s -> 2.4s)
         tl.to(
-          portalFrame,
+          zoomElements,
           {
-            scale: 1.95,
-            duration: 1.5,
-            ease: 'power1.in',
+            scale: 12.0,
+            duration: 2.4,
+            ease: 'power3.in',
           },
           0
         );
 
+        // Desbota todos os elementos durante a aceleração final (1.5s -> 2.4s)
         tl.to(
-          frames,
+          zoomElements,
           {
-            scale: 1.95,
-            duration: 1.5,
-            ease: 'power1.in',
-          },
-          0
-        );
-
-        if (uiLeft) {
-          tl.to(
-            uiLeft,
-            {
-              x: '-5vw',
-              scale: 1.3,
-              opacity: 0.5,
-              duration: 1.5,
-              ease: 'power1.in',
-            },
-            0
-          );
-        }
-
-        if (uiRight) {
-          tl.to(
-            uiRight,
-            {
-              x: '5vw',
-              scale: 1.3,
-              opacity: 0.5,
-              duration: 1.5,
-              ease: 'power1.in',
-            },
-            0
-          );
-        }
-
-        if (scrollHint) {
-          tl.to(
-            scrollHint,
-            {
-              y: '30px',
-              scale: 1.2,
-              opacity: 0.3,
-              duration: 1.5,
-              ease: 'power1.in',
-            },
-            0
-          );
-        }
-
-        // ----------------------------------------------------
-        // FASE 2: Aceleracao drastica do zoom (1.5s -> 2.4s)
-        // ----------------------------------------------------
-        tl.to(
-          portalFrame,
-          {
-            scale: 12.0,
             opacity: 0,
             duration: 0.9,
-            ease: 'power4.in',
+            ease: 'power2.out',
           },
           1.5
         );
 
-        tl.to(
-          frames,
-          {
-            scale: 12.0,
-            opacity: 0,
-            duration: 0.9,
-            ease: 'power4.in',
-          },
-          1.5
-        );
-
-        if (uiLeft) {
-          tl.to(
-            uiLeft,
-            {
-              x: '-45vw',
-              scale: 3.5,
-              opacity: 0,
-              duration: 0.9,
-              ease: 'power4.in',
-            },
-            1.5
-          );
-        }
-
-        if (uiRight) {
-          tl.to(
-            uiRight,
-            {
-              x: '45vw',
-              scale: 3.5,
-              opacity: 0,
-              duration: 0.9,
-              ease: 'power4.in',
-            },
-            1.5
-          );
-        }
-
-        if (scrollHint) {
-          tl.to(
-            scrollHint,
-            {
-              y: '120px',
-              scale: 2.0,
-              opacity: 0,
-              duration: 0.9,
-              ease: 'power4.in',
-            },
-            1.5
-          );
-        }
-
-        // Desbota o frame de fallback estacionario atras do portal
+        // Desbota o frame de fallback estacionário atrás do portal (1.5s -> 2.4s)
         if (portalBackdrop) {
           tl.to(
             portalBackdrop,
@@ -334,23 +290,6 @@ export function useHeroScrollCamera(refs: HeroRefs, reduced: boolean): void {
               },
             },
             1.5
-          );
-        }
-
-        // Entrada da UI pos-scroll na floresta (copy + CTAs)
-        if (forestUi) {
-          tl.to(
-            forestUi,
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              ease: 'power3.out',
-              onStart: () => {
-                forestUi.style.pointerEvents = 'auto';
-              },
-            },
-            2.3
           );
         }
       };
@@ -529,44 +468,14 @@ export function useHeroScrollCamera(refs: HeroRefs, reduced: boolean): void {
             );
           }
 
-          // Portal frame e frames voltam do zoom (0s)
+          const zoomElementsBack = [portalFrame, frames].filter(Boolean) as HTMLElement[];
+
+          // Portal frame, painéis e UIs voltam do zoom juntos (0s -> 1.2s)
           tlPhase2.to(
-            portalFrame,
+            zoomElementsBack,
             { scale: 1, opacity: 1, duration: 1.2, ease: 'power3.out' },
             0
           );
-          tlPhase2.to(
-            frames,
-            { scale: 1, opacity: 1, duration: 1.2, ease: 'power3.out' },
-            0
-          );
-
-          // UI esquerda retorna (0.3s)
-          if (uiLeft) {
-            tlPhase2.to(
-              uiLeft,
-              { x: 0, scale: 1, opacity: 1, duration: 0.8, ease: 'power3.out' },
-              0.3
-            );
-          }
-
-          // UI direita retorna (0.3s)
-          if (uiRight) {
-            tlPhase2.to(
-              uiRight,
-              { x: 0, scale: 1, opacity: 1, duration: 0.8, ease: 'power3.out' },
-              0.3
-            );
-          }
-
-          // Scroll hint retorna (0.5s)
-          if (scrollHint) {
-            tlPhase2.to(
-              scrollHint,
-              { y: 0, scale: 1, opacity: 1, duration: 0.6, ease: 'power3.out' },
-              0.5
-            );
-          }
         };
 
         // Escuta o evento ended do video reverso para disparar a Fase 2
@@ -723,6 +632,7 @@ export function useHeroScrollCamera(refs: HeroRefs, reduced: boolean): void {
       if (timerId) window.clearTimeout(timerId);
       if (cleanupDownward) cleanupDownward();
       if (cleanupUpward) cleanupUpward();
+      if (cleanupForwardVideo) cleanupForwardVideo();
       if (tl) tl.kill();
     };
   }, [refs, reduced, stop, start]);
