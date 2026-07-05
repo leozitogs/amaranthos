@@ -51,3 +51,11 @@ export const poppins = localFont({
   variable: '--font-poppins',
   display: 'swap',
 });
+
+export const sugoProDisplay = localFont({
+  src: '../../public/fonts/sugo_pro_display/Sugo-Pro-Display-Regular-trial.ttf',
+  variable: '--font-sugo-pro-display',
+  display: 'swap',
+  weight: '400',
+  style: 'normal',
+});

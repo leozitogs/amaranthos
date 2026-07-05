@@ -1,5 +1,6 @@
 'use client';
 
+import { useRef } from 'react';
 import { Play } from 'lucide-react';
 import type { ShowcaseItem } from './hero-data';
 
@@ -7,27 +8,56 @@ type ShowcaseCardProps = {
   item: ShowcaseItem;
   index: number;
   total: number;
+  onPlay: (item: ShowcaseItem, rect: DOMRect) => void;
 };
 
 const tnum = { fontFeatureSettings: '"tnum"' } as const;
 
 /**
- * Card da vitrine: apresenta um buque do catalogo com player e rotulo sob
- * uma camada de vidro fosco (backdrop-blur).
+ * Card da vitrine: apresenta um buque do catalogo com video inline e rotulo
+ * sob uma camada de vidro fosco (backdrop-blur).
  *
- * Dimensoes: 190x250px, raio 24px.
- * Overlay: grafite a 18% (chapado, sem gradiente).
- * Pilula de play: ancorada no canto inferior esquerdo (left-2.5 bottom-2.5),
- * largura pelo conteudo (w-fit), forma rounded-full, vidro fosco.
- * Hover de escala: somente quando o usuario permite movimento (motion-safe).
+ * Dimensoes: 190x240px (hover), raio 24px.
+ * Video: muted, loop, autoplay no hover. object-cover preenche o card.
+ *
+ * onPlay: ao clicar na pilula de play, dispara callback com o item e o
+ * DOMRect do card (para o HeroShowcase animar o lightbox a partir da
+ * posicao exata do card).
  */
-export function ShowcaseCard({ item, index, total }: ShowcaseCardProps) {
+export function ShowcaseCard({ item, index, total, onPlay }: ShowcaseCardProps) {
   const counter = `${String(index + 1).padStart(2, '0')}/${String(total).padStart(2, '0')}`;
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const cardRef = useRef<HTMLElement>(null);
+
+  const handleMouseEnter = () => {
+    videoRef.current?.play().catch(() => {});
+  };
+
+  const handleMouseLeave = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.pause();
+    v.currentTime = 0;
+  };
 
   return (
-    <article className="group relative h-[190px] w-[190px] shrink-0 overflow-hidden rounded-[24px] shadow-[var(--shadow-sm)] transition-[height,transform,box-shadow] duration-[var(--duration-normal)] [transition-timing-function:var(--ease-expo)] hover:h-[240px] hover:shadow-[var(--shadow-md)] motion-safe:hover:scale-[1.02] origin-bottom">
-      {/* Fundo generico com gradiente da paleta Amaranthos */}
-      <div className="from-vinho/45 via-rosa/30 to-menta/40 absolute inset-0 bg-gradient-to-br" />
+    <article
+      ref={cardRef}
+      className="group relative h-[190px] w-[190px] shrink-0 origin-bottom overflow-hidden rounded-[24px] shadow-[var(--shadow-sm)] transition-[height,transform,box-shadow] duration-[var(--duration-normal)] [transition-timing-function:var(--ease-expo)] hover:h-[240px] hover:shadow-[var(--shadow-md)] motion-safe:hover:scale-[1.02]"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Video de fundo do card */}
+      <video
+        ref={videoRef}
+        muted
+        playsInline
+        loop
+        preload="metadata"
+        className="absolute inset-0 h-full w-full object-cover"
+      >
+        <source src={item.video} type="video/mp4" />
+      </video>
 
       {/* Overlay de leitura sutil */}
       <div className="bg-grafite/10 absolute inset-0" />
@@ -45,6 +75,12 @@ export function ShowcaseCard({ item, index, total }: ShowcaseCardProps) {
         <button
           type="button"
           aria-label={`${item.label}, ${counter}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (cardRef.current) {
+              onPlay(item, cardRef.current.getBoundingClientRect());
+            }
+          }}
           className="text-vinho flex size-7 shrink-0 items-center justify-center rounded-full bg-white/90 transition-colors duration-[var(--duration-fast)] hover:bg-white focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] focus-visible:outline-none"
         >
           <Play className="fill-vinho size-3 translate-x-px" strokeWidth={1.5} />

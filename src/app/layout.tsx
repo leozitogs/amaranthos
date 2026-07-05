@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
-import { mainstay, moontime, dmSans, inter, viaodaLibre, poppins } from '@/styles/fonts';
+import { mainstay, moontime, dmSans, inter, viaodaLibre, poppins, sugoProDisplay } from '@/styles/fonts';
 import './globals.css';
 import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+// Footer oculto temporariamente durante a construcao passo a passo do hero.
+// Retorna quando a Secao 2 (subida para as nuvens) existir.
+// import Footer from '@/components/layout/Footer';
 import { LenisProvider } from '@/components/providers/LenisProvider';
 
 export const metadata: Metadata = {
@@ -22,13 +24,13 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${mainstay.variable} ${moontime.variable} ${dmSans.variable} ${inter.variable} ${viaodaLibre.variable} ${poppins.variable}`}
+      className={`${mainstay.variable} ${moontime.variable} ${dmSans.variable} ${inter.variable} ${viaodaLibre.variable} ${poppins.variable} ${sugoProDisplay.variable}`}
     >
       <body className="flex min-h-screen flex-col antialiased">
         <LenisProvider>
           <Header />
           <main className="flex-grow">{children}</main>
-          <Footer />
+          {/* <Footer /> oculto temporariamente, ver nota no import acima. */}
         </LenisProvider>
       </body>
     </html>

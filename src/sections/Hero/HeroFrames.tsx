@@ -12,10 +12,13 @@ type HeroFramesProps = {
 };
 
 /**
- * Abertura ease-in-strong (comeca lento, acelera): 800ms.
- * O ease-in acentuado da sensacao de peso dos paineis ao se abrirem.
+ * Abertura ease-out-expo (parte rapido e desacelera ate acomodar): 800ms.
+ * O ease-out da a sensacao dos paineis se acomodando suave no lugar final,
+ * em vez de cair com peso. 800ms e a excecao cinematografica do hero (brand-kit
+ * permite ate 800ms para o momento do hero). Os paineis permanecem abertos e
+ * recebem o parallax de cursor pelo wrapper externo.
  */
-const OPEN_TRANSITION = 'transform 800ms var(--ease-in-strong)';
+const OPEN_TRANSITION = 'transform 800ms var(--ease-expo)';
 
 /**
  * Translates abertos calculados por FRAME (coverVw = 100 = w-screen):
@@ -30,19 +33,23 @@ const RIGHT_OPEN = `${FRAME.rightOpenVw.toFixed(4)}vw`;
  * ao abrir recuam para as laterais emoldurando o portal. O parallax atua no
  * wrapper externo; o recuo (open) e transform proprio de cada painel.
  *
- * scale-110 nas imagens: os paineis sofrem parallax enquanto abrem. O scale
- * evita corte de borda seca nas extremidades (overflow-hidden no wrapper).
+ * As imagens usam h-full w-auto para manter o aspect ratio original sem
+ * esticar. O container extrapola ±40px acima/abaixo do viewport (margem
+ * suficiente para o parallax Y de ate 30px).
  */
 export function HeroFrames({ opened, animate, onOpened }: HeroFramesProps) {
   return (
-    <>
+    <div data-hero-layer="frames" className="pointer-events-none absolute inset-0 z-30">
       {/* Painel Esquerdo */}
       <div
-        className="pointer-events-none absolute inset-0 z-30"
-        style={{ transform: layerTransform(PARALLAX.inputFrameLeft) }}
+        className="pointer-events-none absolute inset-0 z-30 will-change-transform"
+        style={{
+          transform: layerTransform(PARALLAX.inputFrameLeft),
+          transition: 'transform 1s cubic-bezier(0.2, 0.8, 0.2, 1.15)',
+        }}
       >
         <div
-          className="pointer-events-none absolute top-[-270px] bottom-[-270px] left-0 w-screen will-change-transform"
+          className="pointer-events-none absolute top-[-40px] bottom-[-40px] left-0 w-screen will-change-transform"
           style={{
             transform: `translate3d(${opened ? LEFT_OPEN : '0vw'}, 0, 0)`,
             transition: animate ? OPEN_TRANSITION : undefined,
@@ -55,21 +62,27 @@ export function HeroFrames({ opened, animate, onOpened }: HeroFramesProps) {
             src="/assets/cenas/load/left-input.png"
             alt=""
             aria-hidden
-            fill
+            width={2986}
+            height={1980}
             priority
             sizes="100vw"
-            className="pointer-events-none object-fit: cover object-left origin-left"
+            className={`pointer-events-none absolute left-0 h-full w-auto max-w-none origin-left transition-transform duration-800 [transition-timing-function:var(--ease-expo)] -translate-y-[20px] ${
+              opened ? 'translate-x-[9vw]' : 'translate-x-0'
+            }`}
           />
         </div>
       </div>
 
       {/* Painel Direito */}
       <div
-        className="pointer-events-none absolute inset-0 z-30"
-        style={{ transform: layerTransform(PARALLAX.inputFrameRight) }}
+        className="pointer-events-none absolute inset-0 z-30 will-change-transform"
+        style={{
+          transform: layerTransform(PARALLAX.inputFrameRight),
+          transition: 'transform 1s cubic-bezier(0.2, 0.8, 0.2, 1.15)',
+        }}
       >
         <div
-          className="pointer-events-none absolute top-[-270px] bottom-[-270px] left-0 w-screen will-change-transform overflow-hidden"
+          className="pointer-events-none absolute top-[-40px] bottom-[-40px] left-0 w-screen overflow-hidden will-change-transform"
           style={{
             transform: `translate3d(${opened ? RIGHT_OPEN : '0vw'}, 0, 0)`,
             transition: animate ? OPEN_TRANSITION : undefined,
@@ -79,13 +92,16 @@ export function HeroFrames({ opened, animate, onOpened }: HeroFramesProps) {
             src="/assets/cenas/load/right-input.png"
             alt=""
             aria-hidden
-            fill
+            width={2986}
+            height={1980}
             priority
             sizes="100vw"
-            className="pointer-events-none object-fit: cover object-right origin-right"
+            className={`pointer-events-none absolute left-0 h-full w-auto max-w-none origin-left transition-transform duration-800 [transition-timing-function:var(--ease-expo)] -translate-y-0 ${
+              opened ? 'translate-x-[5vw]' : 'translate-x-[calc(100vw-(100vh+80px)*1.508)]'
+            }`}
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }

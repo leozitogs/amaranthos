@@ -23,7 +23,7 @@ function NavItem({
     <Link
       href={href}
       className={cn(
-        'group relative inline-flex items-center py-1 font-poppins text-sm font-light tracking-wide transition-colors duration-[var(--duration-fast)] [transition-timing-function:var(--ease-expo)] focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-creme)] focus-visible:outline-none',
+        'group font-poppins relative inline-flex items-center py-1 text-sm font-light tracking-wide transition-colors duration-[var(--duration-fast)] [transition-timing-function:var(--ease-expo)] focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-creme)] focus-visible:outline-none',
         isScrolled ? 'text-grafite/90 hover:text-vinho' : 'text-creme/90 hover:text-white'
       )}
     >
@@ -49,7 +49,10 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && (window as unknown as { __heroRevealed?: boolean }).__heroRevealed) {
+    if (
+      typeof window !== 'undefined' &&
+      (window as unknown as { __heroRevealed?: boolean }).__heroRevealed
+    ) {
       setHeroRevealed(true);
       return;
     }
@@ -87,7 +90,10 @@ export default function Header() {
     >
       <div className="mx-auto w-full px-6 sm:px-10 lg:px-[12.5vw]">
         <div className="grid min-h-[88px] grid-cols-[1fr_auto_1fr] items-center gap-8 py-2">
-          <nav aria-label="Navegacao principal" className="flex w-full items-center justify-between">
+          <nav
+            aria-label="Navegacao principal"
+            className="flex w-full items-center justify-between"
+          >
             {leftNav.map((item) => (
               <NavItem
                 key={item.href}
@@ -101,7 +107,7 @@ export default function Header() {
           <Link
             href="/#inicio"
             aria-label="Amaranthos Atelie, voltar para o inicio"
-            className="flex items-center justify-center rounded-full focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-creme)] focus-visible:outline-none transition-transform duration-200 hover:scale-105"
+            className="flex items-center justify-center rounded-full transition-transform duration-200 hover:scale-105 focus-visible:ring-2 focus-visible:ring-[color:var(--color-ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-creme)] focus-visible:outline-none"
           >
             <motion.div
               initial={{ rotate: 0, scale: 0, opacity: 0 }}
@@ -121,7 +127,10 @@ export default function Header() {
             </motion.div>
           </Link>
 
-          <nav aria-label="Navegacao secundaria" className="flex w-full items-center justify-between">
+          <nav
+            aria-label="Navegacao secundaria"
+            className="flex w-full items-center justify-between"
+          >
             {rightNav.map((item) => (
               <NavItem
                 key={item.href}

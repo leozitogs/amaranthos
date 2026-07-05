@@ -10,19 +10,8 @@ type HeroCopyProps = {
 };
 
 /**
- * Coluna esquerda: voz da marca. Titulo em ViaodaLibre, filete menta, corpo em
- * Poppins. Copy PT-BR placeholder ate o amaranthos-ux-microcopy entregar a
- * versao final (estrutura: titulo curto + paragrafo de quatro linhas).
- *
- * Tipografia (tamanhos do mockup da PO, referencia 1920: as clamps batem o px
- * exato a 1920 via vw e escalam proporcionalmente abaixo disso):
- *   "FLORES": 60px (clamp(2.5rem, 3.125vw, 3.75rem)).
- *   "MURCHAM": 66px (clamp(2.75rem, 3.4375vw, 4.125rem)), maior que FLORES.
- *   "QUE NAO": 24px (clamp(0.95rem, 1.25vw, 1.5rem)), tracking 0.08em.
- *   "NAO" em menta (var(--color-menta)); "QUE" em creme/90.
- *   Paragrafo: Poppins, 18px (clamp(1rem, 0.9375vw, 1.125rem)), line-height 1.6.
- *   Todos peso 400, line-height 0.92 no titulo, creme, caixa alta no titulo.
- *   "MURCHAM" como palavra solida (sem split por caractere).
+ * Coluna esquerda: voz da marca inicial (Fase 2).
+ * Titulo em ViaodaLibre, filete menta, corpo em Poppins.
  */
 export function HeroCopy({ revealed, reduced }: HeroCopyProps) {
   const container: Variants = {
