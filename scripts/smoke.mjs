@@ -7,22 +7,23 @@
 import { spawn } from 'node:child_process';
 import { chromium } from 'playwright';
 
-const PORTA = 3000;
+const PORTA = 3335;
 const problemas = [];
 
 function registra(tipo, texto) {
   problemas.push(`[${tipo}] ${texto}`);
 }
 
-const preview = spawn('npx', ['next', 'start', '-p', String(PORTA)], {
-  stdio: 'ignore',
+const cmdName = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm';
+const preview = spawn(cmdName, ['exec', 'next', 'start', '-p', String(PORTA)], {
+  stdio: 'inherit',
   shell: true,
 });
 
 async function esperaServidor() {
   for (let i = 0; i < 40; i++) {
     try {
-      const r = await fetch(`http://localhost:${PORTA}/`);
+      const r = await fetch(`http://127.0.0.1:${PORTA}/`);
       if (r.ok || r.status < 500) return;
     } catch {
       // ainda subindo
@@ -75,7 +76,7 @@ try {
 
   for (const rota of rotas) {
     console.log(`Verificando rota: ${rota}`);
-    await page.goto(`http://localhost:${PORTA}${rota}`);
+    await page.goto(`http://127.0.0.1:${PORTA}${rota}`);
     await page.waitForTimeout(1000); // tempo para renderizacao e animacao inicial
   }
 

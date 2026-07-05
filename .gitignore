@@ -44,3 +44,6 @@ Thumbs.db
 # temp backup
 /AmaranthosWeb_backup_temp
 node_modules
+
+# claude ai
+.claude/

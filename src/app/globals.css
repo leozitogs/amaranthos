@@ -45,11 +45,58 @@
   --font-moontime: 'Moontime', cursive;
   --font-dm-sans: var(--font-dm-sans);
   --font-inter: var(--font-inter);
+  --font-viaoda-libre: var(--font-viaoda-libre);
+  --font-poppins: var(--font-poppins);
+  --font-sugo-pro-display: var(--font-sugo-pro-display);
+}
+
+:root {
+  /* Motion (brand-kit secao 8.2) */
+  --duration-instant: 100ms;
+  --duration-fast: 200ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-deliberate: 800ms;
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-strong: cubic-bezier(0.7, 0, 0.84, 0);
+
+  /* Sombras (brand-kit secao 9.4): respiracao, nao peso */
+  --shadow-sm: 0 1px 2px rgba(42, 31, 36, 0.04);
+  --shadow-md: 0 2px 8px rgba(42, 31, 36, 0.06);
+  --shadow-lg: 0 8px 24px rgba(42, 31, 36, 0.08);
+  --shadow-cinematic: 0 20px 60px rgba(135, 75, 105, 0.12);
 }
 
 @layer base {
+  html {
+    /* Ancoras de secao nao ficam escondidas sob o header fixo. */
+    scroll-padding-top: 5rem;
+  }
+
   body {
     background-color: var(--color-creme);
     color: var(--color-grafite);
+  }
+}
+
+@layer utilities {
+  /* Entrada suave do header (fade in apos o load assentar) */
+  @keyframes amaranthos-fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-header-in {
+    animation: amaranthos-fade-in var(--duration-slow) var(--ease-expo) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-header-in {
+      animation: amaranthos-fade-in var(--duration-normal) ease both;
+    }
   }
 }

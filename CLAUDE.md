@@ -33,16 +33,20 @@ A Amaranthos e um atelie artesanal premium fundado por Gisele Estefane (a PO). O
 5. Nunca usar emojis na copy do site: o texto afetivo sustenta a mensagem sozinho.
 6. Nunca usar Title Case ou ALL CAPS nos titulos e labels: use sempre sentence case.
 7. Nunca rotacionar, espelhar ou recolorir o mascote (`isologo.svg`).
-8. Nunca usar a fonte Mainstay em corpo de texto: ela e de uso exclusivo para display/títulos.
+8. Nunca usar a fonte Mainstay fora do logotipo: ela e exclusiva da marca grafica; o display de hero e titulos de secao e ViaodaLibre.
 9. Nunca usar branco puro `#FFFFFF` como background principal: use sempre Creme `#FDF7F1`.
 10. Nunca usar animacoes agressivas: a transicao deve ser suave, com ease-out-expo e duracao de 200 a 400ms.
 
 ## Tipografia no CSS
 
-- **Mainstay**: Display principal (Hero, titulos de secao). Fontes locais em `public/fonts/`.
-- **Moontime**: Script secundario (Taglines afetivas, detalhes). Fonte local em `public/fonts/`.
-- **DM Sans**: Fontes de interface e corpo de texto (Google Fonts).
-- **Inter**: Numeros e precos com fonte tabular (Google Fonts).
+Sistema oficial v2 (ViaodaLibre e Poppins oficializadas pela PO):
+
+- **Mainstay**: logotipo e wordmark da marca apenas. Fonte local em `public/fonts/`.
+- **ViaodaLibre**: display oficial (titulo do hero e titulos de secao). Local em `public/fonts/`.
+- **Moontime**: script afetiva (taglines, "Atelie", detalhes). Local em `public/fonts/`.
+- **Poppins**: UI e corpo (header e nav em Light 300, corpo em Regular 400, enfase em 500/600). Local em `public/fonts/`.
+- **Inter**: numeros e precos com fonte tabular (Google Fonts).
+- **DM Sans**: descontinuada, substituida por Poppins (remover no cleanup).
 
 ## Portao de qualidade
 
@@ -67,10 +71,53 @@ Voce sugere os comandos e mensagens de commit, a Gisele executa:
 
 ## Estrutura do projeto
 
-- `src/app/`: Layouts, paginas e CSS global do Next.js.
-- `src/sections/`: Componentes grandes de secoes da home (Hero, CatalogPreview, etc.).
-- `src/components/`: Componentes reutilizaveis (`brand/`, `layout/`, `ui/`).
-- `src/lib/`: Motores de precificacao, utilidades, configuracoes de gsap, lenis e tipos.
-- `src/data/`: Dados estaticos tipados de flores, buques, etc.
-- `assets/`: Diretorio de assets estaticos fonte (preservados).
-- `public/`: Assets servidos de forma estatica pelo Next.js (fontes de marca, favicon).
+- `src/app/`: Layouts, páginas e CSS global do Next.js.
+- `src/sections/`: Componentes grandes de seções da home (Hero, CatalogPreview, etc.).
+- `src/components/`: Componentes reutilizáveis (`brand/`, `layout/`, `ui/`).
+- `src/lib/`: Motores de precificação, utilidades, configurações de gsap, lenis e tipos.
+- `src/data/`: Dados estáticos tipados de flores, buquês, etc.
+- `public/assets/`: Ativos estáticos oficiais organizados por categoria (fontes de marca, cenas, modelos 3D, imagens de produtos).
+- `public/fonts/`: Fontes locais servidas estaticamente pelo Next.js.
+
+## Processamento de Mídia
+
+- É permitida e autorizada a utilização da ferramenta `ffmpeg` para conversão, compressão e otimização de vídeos e imagens do projeto.
+
+## Squad de subagentes (.claude/agents)
+
+O projeto tem uma squad de 15 subagentes especialistas em `.claude/agents/`, todos
+com prefixo `amaranthos-`. Quem opera o Claude Code despacha via `Task`. A regra de
+ouro: o agente central tem contexto amplo mas raso; a qualidade vem da
+especializacao. Para trabalho visual, de animacao, scroll, 3D ou auditoria,
+despache o especialista em vez de codar direto.
+
+| Subagente                         | Quando usar                                           |
+| --------------------------------- | ----------------------------------------------------- |
+| `amaranthos-conductor`            | Brief grande e multidisciplinar. Orquestra os outros. |
+| `amaranthos-art-director`         | Antes de codar cena nova. Devolve Visual Spec.        |
+| `amaranthos-asset-curator`        | Path exato de qualquer asset em `public/assets/`.     |
+| `amaranthos-frontend-architect`   | Componente e secao Next.js, Tailwind, estrutura.      |
+| `amaranthos-animation-engineer`   | Framer Motion e GSAP em tempo real, gesto, hover.     |
+| `amaranthos-scroll-storyteller`   | GSAP ScrollTrigger pinado e scrubado (hero, nuvens).  |
+| `amaranthos-transitions-engineer` | Lenis e transicao de rota, sem corte branco.          |
+| `amaranthos-3d-engineer`          | Buque 3D em Three.js puro sobre o video do hero.      |
+| `amaranthos-shader-artist`        | GLSL custom (uso raro, so quando a cena exigir).      |
+| `amaranthos-video-pipeline`       | ffmpeg, compressao do video do hero e do mascote.     |
+| `amaranthos-ux-microcopy`         | Texto curto na voz intima da marca, em portugues.     |
+| `amaranthos-brand-guard`          | SEMPRE antes de aprovar entrega. Audita a marca.      |
+| `amaranthos-a11y-auditor`         | SEMPRE antes de entregar. WCAG 2.1 AA.                |
+| `amaranthos-performance-watchdog` | Bundle, FPS, peso de asset.                           |
+| `amaranthos-catalog-builder`      | Paginas e cards de catalogo e base do configurador.   |
+
+Fluxo padrao de uma secao: asset-curator (paths), art-director (Visual Spec),
+frontend-architect (build estatico), depois animation/scroll/transitions/3D
+conforme a camada, ux-microcopy ao final, e por fim brand-guard mais a11y-auditor
+(obrigatorios) e performance-watchdog (quando houver peso novo).
+
+Otimizacao de custo por modelo: Opus em conductor e art-director (decisao);
+Sonnet nos engineers e no microcopy (build); Haiku em asset-curator, a11y-auditor
+e performance-watchdog (auditoria barata e rapida). Ajuste o campo `model:` no
+frontmatter se quiser mudar.
+
+Detalhes de instalacao e uso em `.claude/agents/README.md`. Nenhum subagente
+commita, pusha ou cria branch: apenas o PO executa Git.

@@ -23,7 +23,7 @@ Este é o roteiro definitivo de desenvolvimento do website da Amaranthos Ateliê
 
 A jornada do usuário ao rolar a página principal é dividida em 5 fases de transição contínuas:
 
-1. **Abertura (Hero Cinematográfico)**: A entrada do usuário em um mundo mágico onde toda a natureza é feita de chenille, combinando preloader dinâmico, transição de portal e um modelo 3D imerso em vídeo sob controle de rolagem (trabalhado inicialmente para computadores).
+1. **Abertura (Hero Cinematográfico)**: A entrada do usuário em um mundo mágico onde toda a natureza é feita de chenille, combinando preloader dinâmico, transição de portal e vídeo oficial imerso sob controle de rolagem (trabalhado inicialmente para computadores).
 2. **Ascensão (Vitrine nos Céus)**: O usuário sobe verticalmente cruzando uma camada de nuvens interativas (que respondem ao cursor do mouse) para alcançar a vitrine de produtos (CatalogPreview) flutuando no céu claro.
 3. **Descida (A Mesa de Trabalho)**: A câmera desce de volta à terra cruzando as nuvens, aterrissando na mesa de trabalho real da Gisele em Recife (Sobre). O fundo assume cores terrosas com texturas táteis de juta e fios de chenille.
 4. **Criação (A Oficina Interativa)**: Um convite para experimentar o trabalho manual (Personalizar) em uma mesa de trabalho virtual onde flores de chenille soltas flutuam e reagem ao cursor do mouse ao redor de um vaso vazio.
@@ -42,9 +42,8 @@ A jornada do usuário ao rolar a página principal é dividida em 5 fases de tra
   - **Mecânica**: A separação das laterais revela o frame de fundo com o asset `portal-hero.png` (pasta `public/assets/cenas/hero/`) centralizado, criando a moldura e a expectativa visual.
 - **Fase 3: O Mergulho da Câmera (Transition)**
   - **Mecânica**: Animação via GSAP. Ao iniciar a rolagem, as interfaces textuais e controles desaparecem e a câmera simula um zoom-in com efeito de rebote (bounce) diretamente para dentro do buraco do portal (representado pela transição `hero-transition-bouquet-3D.png`).
-- **Fase 4: A Floresta e o Buquê 3D (Cinematic)**
-  - **Mecânica**: O zoom nos leva para a cena da floresta de chenille. Um vídeo de fundo roda em paralaxe associado ao scroll e ao movimento do cursor do mouse.
-  - **Tridimensionalidade**: O arquivo `bouquet-hero.glb` é renderizado sobre o vídeo usando Three.js, com iluminação e filtros de cor ajustados para total fusão visual com a cena.
+- **Fase 4: A Floresta de Chenille (Cinematic)**
+  - **Mecânica**: O zoom nos leva para a cena da floresta de chenille. O vídeo oficial (`motion-hero-amaranthos-4k.mp4`) roda em loop com parallax associado ao movimento do cursor do mouse.
 
 ### Seção 2: CatalogPreview | A Vitrine Acima das Nuvens
 
@@ -94,12 +93,11 @@ A jornada do usuário ao rolar a página principal é dividida em 5 fases de tra
   - Construir as páginas de listagem (`/buques`, `/flores-avulsas`, `/centros-de-mesa`, `/chaveiros`) combinando grelha e carrosséis.
   - Estruturar a página base do configurador `/personalizar` e as seções da Home.
 
-### Fase 3: Desenvolvimento do Motor de Movimento (GSAP, Three.js e Scroll)
+### Fase 3: Desenvolvimento do Motor de Movimento (GSAP e Scroll)
 
-- **Objetivo**: Materializar a experiência do Hero cinematográfico com portal e buquê 3D, transição de nuvens e efeitos sob rolagem.
+- **Objetivo**: Materializar a experiência do Hero cinematográfico com portal e vídeo oficial, transição de nuvens e efeitos sob rolagem.
 - **Ações**:
-  - Configurar Three.js na seção Hero para renderizar o modelo `.glb` sobre o vídeo de fundo.
-  - Programar a timeline do GSAP para coordenar a separação do load, o zoom no portal e a ascensão e descida nas nuvens.
+  - Programar a timeline do GSAP para coordenar a separação do load, o zoom no portal e a transição para o vídeo oficial.
   - Habilitar o efeito cursor magnético e interativo nas nuvens e na seção de personalização.
 
 ### Fase 4: O Configurador Virtual e Sacola de Compras

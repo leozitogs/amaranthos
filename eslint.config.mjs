@@ -14,7 +14,15 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   {
-    ignores: ['.next/**', 'node_modules/**', 'dist/**', 'out/**', 'next-env.d.ts'],
+    ignores: [
+      '.next/**',
+      'node_modules/**',
+      'dist/**',
+      'out/**',
+      'next-env.d.ts',
+      // Decoder Draco vendorizado (third-party minificado, servido estatico).
+      'public/draco/**',
+    ],
   },
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
